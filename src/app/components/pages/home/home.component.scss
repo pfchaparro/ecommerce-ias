@@ -1,0 +1,27 @@
+.container {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: 24% 24% 24% 24%;
+    grid-column-gap: 10px;
+    grid-row-gap: 15px;
+    justify-content: center;
+
+    a {
+        cursor: pointer;
+        color: #000;
+        text-decoration: none;
+    }
+    .product-card {
+        background-color: #92CDEF;
+        color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        font-size: 150%;
+
+        p.content {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}

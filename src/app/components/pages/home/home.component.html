@@ -1,0 +1,21 @@
+<div class="container" *ngIf="products; else loading">
+    <mat-card class="product-card" *ngFor="let product of products">
+        <mat-card-header>
+            <mat-card-title class="product-card-title">
+                <a [routerLink]="['/product', product._id]">
+                    {{product.name}}
+                </a>
+            </mat-card-title>
+            <mat-card-subtitle>{{product.description}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Price: {{product.basePrice}}</p>
+            <p>Inventory Quantity: {{product.inventoryQuantity}}</p>
+        </mat-card-content>
+    </mat-card>
+</div>
+<ng-template #loading>
+    <div class="container-spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

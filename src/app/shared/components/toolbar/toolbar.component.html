@@ -1,0 +1,20 @@
+<mat-toolbar class="toolbar" color="primary">
+    <a routerLink="/" routerLinkActive="activate">
+        <button mat-button>{{appName}}</button>
+    </a>
+    <span class="fill-remainig-space"></span>
+    <a *ngIf="dataLocal; else showLogin" (click)="onLogout()">
+        <button mat-button>Logout</button>
+    </a>
+    <ng-template #showLogin>
+        <a routerLink="/login" routerLinkActive="activate">
+            <button mat-button>Login</button>
+        </a>
+    </ng-template>
+    <a routerLink="/admin" routerLinkActive="activate" *ngIf="dataLocal">
+        <button mat-button>Admin</button>
+    </a>
+    <a routerLink="/about" routerLinkActive="activate">
+        <button mat-button>About</button>
+    </a>
+</mat-toolbar>
