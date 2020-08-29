@@ -12,6 +12,7 @@ import { MaterialModule } from './material.module';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContainerAppComponent } from './components/pages/container-app/container-app.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ContainerAppComponent } from './components/pages/container-app/containe
     HttpClientModule,
     ReactiveFormsModule
   ],
+  entryComponents: [ModalComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

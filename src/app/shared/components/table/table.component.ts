@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ProductService } from '../../../components/products/product.service';
 import { ProductI } from '../../models/product.interface';
 
-//import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from './../modal/modal.component';
@@ -16,7 +16,7 @@ import { ModalComponent } from './../modal/modal.component';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['nameProduct', 'priceProduct', 'actions'];
+  displayedColumns: string[] = ['name', 'basePrice', 'actions'];
   dataSource = new MatTableDataSource();
   products: any;
 
@@ -26,11 +26,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   constructor(private productService: ProductService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.productService.getAllProduct().subscribe((data: ProductI[]) => {
-      console.log(data);
-      this.products = data;
-      this.dataSource.data = this.products.products;
-    })
+    this.getProduct();
   }
 
   ngAfterViewInit() {
@@ -42,37 +38,44 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  getProduct() {
+    this.productService.getAllProduct().subscribe((data: ProductI[]) => {
+      this.products = data;
+      this.dataSource.data = this.products.products;
+    })
+  }
+
   onEditProduct(product: ProductI) {
     console.log('Edit product', product);
     this.openDialog(product);
   }
-  /*
-    onDeletePost(post: ProductI) {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: `You won't be able to revert this!`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(result => {
-        if (result.value) {
-          this.postSvc.deletePostById(post).then(() => {
-            Swal.fire('Deleted!', 'Your  post has been deleted.', 'success');
-          }).catch((error) => {
-            Swal.fire('Error!', 'There was an error deleting this post', 'error');
-          });
-        }
-      });
-  
-    }
-  */
+
+  onDeleteProduct(product: ProductI) {
+    console.log(product);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You won't be able to revert this!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(result => {
+      if (result.value) {
+        this.productService.deleteProduct(product._id).subscribe((data) => {
+          Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+        });
+      }
+    });
+    this.getProduct();
+  }
+
   onNewProduct() {
     this.openDialog();
   }
 
   openDialog(product?: ProductI): void {
+    console.log(product);
     const config = {
       data: {
         message: product ? 'Edit Product' : 'New Product',
